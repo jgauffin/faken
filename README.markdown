@@ -90,17 +90,38 @@ public void User_can_be_authenticated_with_convenience_method()
 }
 ```
 
-You can also set any virtual property from one of the `Http*` classes, even those that aren't explicitly settable. e.g., for `HttpContext`:
+All properties for the Request/HttpContext/Response can be set using the `Control` property, even those that normally are read only.
 
 ```c#
-var context = new FakeHttpContext();
+var request = new FakeHttpRequest();
 var uri = new Uri("http://www.google.com/");
 
 //set the UrlReferrer
-context.Set(ctx => ctx.UrlReferrer, uri);
+request.Control.UrlReferrer = uri;
 
 //get the UrlReferrer
-Console.WriteLine(context.UrlReferrer); //<http://www.google.com/>
+Console.WriteLine(request.UrlReferrer); //<http://www.google.com/>
+```
+
+You can also use our fluent builders:
+
+```csharp
+// simple context
+var httpContext = builder
+    .Post("http://localhost/?A=1")
+    .RespondWith(new {Status = "Ok"})
+    .Build();
+
+// configuring the session
+var httpContext = builder
+    .UsingSession(new {UserId = 10})
+    .Build();
+
+// setting principal
+var principal ? new GenericPrincipal(new GenericIdentity("Arne"), new []{"Admin"});
+var httpContext = builder
+    .UsePrincipal(principal)
+    .Build();
 ```
 
 This means no more `NotImplementedException`s in your tests.
