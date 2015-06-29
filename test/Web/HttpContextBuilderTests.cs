@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace FakeN.Web.Test
 {
-   
+
     [TestFixture]
     public class HttpContextBuilderTests
     {
@@ -26,7 +26,7 @@ namespace FakeN.Web.Test
         {
             var httpContext = builder
                 .Post("http://localhost/?A=1")
-                .RespondWith(new {Status = "Ok"})
+                .RespondWith(new { Status = "Ok" })
                 .Build();
 
 
@@ -41,7 +41,7 @@ namespace FakeN.Web.Test
         public void assigns_session_correctly()
         {
             var httpContext = builder
-                .UsingSession(new {UserId = 10})
+                .UsingSession(new { UserId = 10 })
                 .Build();
 
 
@@ -52,7 +52,7 @@ namespace FakeN.Web.Test
         public void assigns_principal_correctly()
         {
             var httpContext = builder
-                .UsePrincipal(new GenericPrincipal(new GenericIdentity("Arne"), new []{"Admin"}))
+                .UsePrincipal(new GenericPrincipal(new GenericIdentity("Arne"), new[] { "Admin" }))
                 .Build();
 
 

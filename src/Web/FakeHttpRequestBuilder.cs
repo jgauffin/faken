@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Specialized;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Web;
 
@@ -70,6 +71,17 @@ namespace FakeN.Web
         {
             return _builder.RespondWith();
         }
+
+        public FakeHttpContextBuilder RespondWith(int statusCode)
+        {
+            return _builder.RespondWith(statusCode);
+        }
+
+        public FakeHttpContextBuilder RespondWith(HttpStatusCode statusCode)
+        {
+            return _builder.RespondWith(statusCode);
+        }
+
 
         public FakeHttpContextBuilder RespondWith(string body, string contentType = "text/html")
         {

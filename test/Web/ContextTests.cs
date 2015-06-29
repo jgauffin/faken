@@ -18,7 +18,7 @@ namespace FakeN.Web.Test
 		{
 			context.Items.Add("color", "blue");
 
-			Assert.That(context.Items["color"], Is.EqualTo("blue"));
+            Assert.That(context.Items["color"], Is.EqualTo("blue"));
 		}
 	}
 }

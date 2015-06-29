@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security.Principal;
 
 namespace FakeN.Web
@@ -118,6 +119,20 @@ namespace FakeN.Web
         public FakeHttpContextBuilder RespondWith(object body, string contentType = "application/json")
         {
             _response = new FakeHttpResponseBuilder(this, BodySerializer(body), contentType);
+            return this;
+        }
+
+        public FakeHttpContextBuilder RespondWith(int statusCode)
+        {
+            _response = new FakeHttpResponseBuilder(this);
+            _response.Status(statusCode);
+            return this;
+        }
+
+        public FakeHttpContextBuilder RespondWith(HttpStatusCode statusCode)
+        {
+            _response = new FakeHttpResponseBuilder(this);
+            _response.Status(statusCode);
             return this;
         }
 
