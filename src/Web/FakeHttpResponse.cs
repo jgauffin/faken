@@ -6,94 +6,164 @@ using System.Web;
 
 namespace FakeN.Web
 {
-	public class FakeHttpResponse : HttpResponseBase
-	{
-		private Func<string, string> appPathModifier;
+    public class FakeHttpResponse : HttpResponseBase
+    {
+        public FakeHttpResponse()
+        {
+            Control = new FakeHttpResponseControl();
+        }
 
-		private bool buffer;
+        public FakeHttpResponseControl Control { get; set; }
 
-		private bool bufferOutput;
+        public override HttpCachePolicyBase Cache
+        {
+            get { return new FakeHttpCachePolicy(); }
+        }
 
-		private string cacheControl;
+        public override int StatusCode
+        {
+            get { return Control.StatusCode; }
+            set { Control.StatusCode = value; }
+        }
 
-		private string charset;
+        public override string StatusDescription
+        {
+            get { return Control.StatusDescription; }
+            set { Control.StatusDescription = value; }
+        }
 
-		private Encoding contentEncoding;
+        public override int SubStatusCode { get; set; }
 
-		private string contentType;
+        public override bool Buffer
+        {
+            get { return Control.Buffer; }
+            set { Control.Buffer = value; }
+        }
 
-		private HttpCookieCollection cookies;
+        public override bool BufferOutput
+        {
+            get { return Control.BufferOutput; }
+            set { Control.BufferOutput = value; }
+        }
 
-		private int expires;
+        public override string CacheControl
+        {
+            get { return Control.CacheControl; }
+            set { Control.CacheControl = value; }
+        }
 
-		private DateTime expiresAbsolute;
+        public override string Charset
+        {
+            get { return Control.Charset; }
+            set { Control.Charset = value; }
+        }
 
-		private Stream filter;
+        public override Encoding ContentEncoding
+        {
+            get { return Control.ContentEncoding; }
+            set { Control.ContentEncoding = value; }
+        }
 
-		private NameValueCollection headers;
+        public override string ContentType
+        {
+            get { return Control.ContentType; }
+            set { Control.ContentType = value; }
+        }
 
-		private Encoding headerEncoding;
+        public override HttpCookieCollection Cookies
+        {
+            get { return Control.Cookies; }
+        }
 
-		private bool isClientConnected;
+        public override int Expires
+        {
+            get { return Control.Expires; }
+            set { Control.Expires = value; }
+        }
 
-		private bool isRequestBeingRedirected;
+        public override DateTime ExpiresAbsolute
+        {
+            get { return Control.ExpiresAbsolute; }
+            set { Control.ExpiresAbsolute = value; }
+        }
 
-		private TextWriter output;
+        public override Stream Filter
+        {
+            get { return Control.Filter; }
+            set { Control.Filter = value; }
+        }
 
-		private Stream outputStream;
+        public override NameValueCollection Headers
+        {
+            get { return Control.Headers; }
+        }
 
-		private string redirectLocation;
+        public override Encoding HeaderEncoding
+        {
+            get { return Control.HeaderEncoding; }
+            set { Control.HeaderEncoding = value; }
+        }
 
-		private string status;
+        public override bool IsClientConnected
+        {
+            get { return Control.IsClientConnected; }
+        }
 
-		private bool suppressContent;
+        public override bool IsRequestBeingRedirected
+        {
+            get { return Control.IsRequestBeingRedirected; }
+        }
 
-		private bool trySkipIisCustomErrors;
+        public override TextWriter Output
+        {
+            get { return Control.Output; }
+            set { Control.Output = value; }
+        }
 
-		public FakeHttpResponse()
-		{
-			appPathModifier = x => x;
-		}
+        public override Stream OutputStream
+        {
+            get { return Control.OutputStream; }
+        }
 
-		public override HttpCachePolicyBase Cache
-		{
-			get { return new FakeHttpCachePolicy(); }
-		}
+        public override string RedirectLocation
+        {
+            get { return Control.RedirectLocation; }
+            set { Control.RedirectLocation = value; }
+        }
 
-		public override string ApplyAppPathModifier(string virtualPath)
-		{
-			return appPathModifier(virtualPath);
-		}
+        /// <summary>
+        /// When overridden in a derived class, gets or sets the Status value that is returned to the client.
+        /// </summary>
+        /// <returns>
+        /// The status of the HTTP output. For information about valid status codes, see HTTP Status Codes on the MSDN Web site.
+        /// </returns>
+        public override string Status
+        {
+            get { return Control.Status ?? StatusCode.ToString(); }
+            set { Control.Status = value; }
+        }
 
-		public FakeHttpResponse SetAppPathModifier(Func<string, string> appPathModifier)
-		{
-			this.appPathModifier = appPathModifier;
-			return this;
-		}
+        public override bool SuppressContent
+        {
+            get { return Control.SuppressContent; }
+            set { Control.SuppressContent = value; }
+        }
 
-		public override int StatusCode { get; set; }
-		public override string StatusDescription { get; set; }
-		public override int SubStatusCode { get; set; }
+        public override bool TrySkipIisCustomErrors
+        {
+            get { return Control.TrySkipIisCustomErrors; }
+            set { Control.TrySkipIisCustomErrors = value; }
+        }
 
-		public override bool Buffer { get { return buffer; } set { buffer = value; } }
-		public override bool BufferOutput { get { return bufferOutput; } set { bufferOutput = value; } }
-		public override string CacheControl { get { return cacheControl; } set { cacheControl = value; } }
-		public override string Charset { get { return charset; } set { charset = value; } }
-		public override Encoding ContentEncoding { get { return contentEncoding; } set { contentEncoding = value; } }
-		public override string ContentType { get { return contentType; } set { contentType = value; } }
-		public override HttpCookieCollection Cookies { get { return cookies; } }
-		public override int Expires { get { return expires; } set { expires = value; } }
-		public override DateTime ExpiresAbsolute { get { return expiresAbsolute; } set { expiresAbsolute = value; } }
-		public override Stream Filter { get { return filter; } set { filter = value; } }
-		public override NameValueCollection Headers { get { return headers; } }
-		public override Encoding HeaderEncoding { get { return headerEncoding; } set { headerEncoding = value; } }
-		public override bool IsClientConnected { get { return isClientConnected; } }
-		public override bool IsRequestBeingRedirected { get { return isRequestBeingRedirected; } }
-		public override TextWriter Output { get { return output; } set { output = value; } }
-		public override Stream OutputStream { get { return outputStream; } }
-		public override string RedirectLocation { get { return redirectLocation; } set { redirectLocation = value; } }
-		public override string Status { get { return status; } set { status = value; } }
-		public override bool SuppressContent { get { return suppressContent; } set { suppressContent = value; } }
-		public override bool TrySkipIisCustomErrors { get { return trySkipIisCustomErrors; } set { trySkipIisCustomErrors = value; } }
-	}
+        public override string ApplyAppPathModifier(string virtualPath)
+        {
+            return Control.AppPathModifier(virtualPath);
+        }
+
+        public FakeHttpResponse SetAppPathModifier(Func<string, string> appPathModifier)
+        {
+            Control.AppPathModifier = appPathModifier;
+            return this;
+        }
+    }
 }

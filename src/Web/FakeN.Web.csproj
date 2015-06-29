@@ -41,18 +41,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeHttpContextBuilder.cs" />
+    <Compile Include="FakeHttpApplication.cs" />
     <Compile Include="FakeHttpCachePolicy.cs" />
     <Compile Include="FakeHttpContext.cs" />
+    <Compile Include="FakeHttpContextControl.cs" />
     <Compile Include="FakeHttpContextExtensions.cs" />
     <Compile Include="FakeHttpFileCollection.cs" />
     <Compile Include="FakeHttpPostedFile.cs" />
     <Compile Include="FakeHttpRequest.cs" />
+    <Compile Include="FakeHttpRequestBuilder.cs" />
+    <Compile Include="FakeHttpRequestControl.cs" />
     <Compile Include="FakeHttpResponse.cs" />
+    <Compile Include="FakeHttpResponseBuilder.cs" />
+    <Compile Include="FakeHttpResponseControl.cs" />
+    <Compile Include="FakeHttpServerUtilityBase.cs" />
     <Compile Include="FakeHttpSessionState.cs" />
     <Compile Include="FakeHttpSessionStateExtensions.cs" />
+    <Compile Include="FakeHttpStateBase.cs" />
+    <Compile Include="FakeRequestContext.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="HttpObjectExtensions.cs" />
+    <Compile Include="IHttpObject.cs" />
     <Compile Include="MutableIdentity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransferRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

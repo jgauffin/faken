@@ -10,7 +10,11 @@ namespace FakeN.Web.Test
 		[Test]
 		public void Session_should_not_be_null()
 		{
-			Assert.That(new FakeHttpContext().Session, Is.Not.Null);
+
+		    var context = new FakeHttpContext();
+		    var session = context.Session;
+
+			Assert.That(context.Session, Is.Not.Null);
 		}
 
 		[Test]

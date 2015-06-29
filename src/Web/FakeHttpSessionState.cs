@@ -1,4 +1,6 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web;
 using System.Web.SessionState;
 
@@ -27,7 +29,17 @@ namespace FakeN.Web
 			data = new SessionStateCollection();
 		}
 
-		public override object this[string name]
+	    public FakeHttpSessionState(IDictionary<string, object> session)
+	    {
+	        if (session == null) throw new ArgumentNullException("session");
+            data = new SessionStateCollection();
+            foreach (var kvp in session)
+	        {
+	            data[kvp.Key] = kvp.Value;
+	        }
+	    }
+
+	    public override object this[string name]
 		{
 			get { return data[name]; }
 			set { data[name] = value; }

@@ -37,6 +37,20 @@ namespace FakeN.Web {
 
 			var member = body.Member;
 
+            //get ctrl class
+		    var ctrlProperty = req.GetType().GetProperty("Control");
+		    if (ctrlProperty != null)
+		    {
+		        var controlInstance = ctrlProperty.GetValue(req, null);
+		        var setter=ctrlProperty.PropertyType.GetProperty(member.Name);
+		        if (setter != null)
+		        {
+                    setter.SetValue(controlInstance, value, null);
+		            return;
+		        }
+
+		    }
+
 			//call set method if it exists
 			var setMethod = req.GetType().GetMethod("Set" + member.Name, new[] { typeof(T) });
 			if (setMethod != null) {
