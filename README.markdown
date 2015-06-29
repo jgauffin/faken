@@ -109,7 +109,8 @@ You can also use our fluent builders:
 // simple context
 var httpContext = builder
     .Post("http://localhost/?A=1")
-    .RespondWith(new {Status = "Ok"})
+    .WithForm(new { FirstName = "Jonas", LastName = "Gauffin", UserName = "jgauffin" })
+    .RespondWith(403)
     .Build();
 
 // configuring the session
